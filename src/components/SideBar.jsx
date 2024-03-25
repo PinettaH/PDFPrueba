@@ -3,18 +3,19 @@ import imagen1 from '../imagenes/imagen1.png'
 import { AiFillFilePdf } from "react-icons/ai";
 import { CgAirplane } from "react-icons/cg";
 
+
 import { useState } from "react";
 const SideBar = () => {
     const [open, setOpen] = useState(true);
     const Menus = [
-    { title: "menu", src: "Chart_fill" },
-    { title: "Inbox", src: "Chat" },
-    { title: "cuenta", src: "User", gap: true },
-    { title: "cronograma ", src: "Calendar" },
-    { title: "buscar", src: "Search" },
-    { title: "analisis", src: "Chart" },
-    { title: "archivos ", src: "Folder", gap: true },
-    { title: "ajustes", src: "Setting" },
+    { title: "menu", src: "logo" },
+    { title: "Inbox", src: imagen1 },
+    { title: "cuenta", src: "logo", gap: true },
+    { title: "cronograma ", src: "imagen1" },
+    { title: "buscar", src: "logo" },
+    { title: "analisis", src: "imagen1" },
+    { title: "archivos ", src: "logo", gap: true },
+    { title: "ajustes", src: "imagen1" },
     ];
 
     return (
@@ -56,7 +57,7 @@ const SideBar = () => {
                     index === 0 && "bg-light-white"
                 } `}
                 >
-                <CgAirplane />
+                <img className='w-8' src={Menu.src} />
                 <span className={`${!open && "hidden"} origin-left duration-200`}>
                     {Menu.title}
                 </span>

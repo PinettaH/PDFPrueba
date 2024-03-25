@@ -1,5 +1,9 @@
 import React, { useState } from 'react'
 import userApi from '../api/userApi'
+import PDFgenerador from './PDFGenerador';
+
+
+
 
 const Dashboard = () => {
     const [usuario, setUsuarios] = useState();
@@ -37,7 +41,7 @@ const Dashboard = () => {
                     class="bg-cyan-800 hover:bg-slate-950 text-white font-bold py-3 px-6 rounded-full shadow-lg hover:text-white shadow-white transform transition-all duration-500 ease-in-out hover:scale-110 hover:brightness-110 hover:animate-pulse active:animate-bounce"
                     onClick={handleClick}
                 >
-                    Archivo
+                    Obtener datos 
                 </button>
                 <button
                     class="bg-cyan-800 hover:bg-slate-950 text-white font-bold py-3 px-6 rounded-full shadow-lg hover:text-white shadow-white transform transition-all duration-500 ease-in-out hover:scale-110 hover:brightness-110 hover:animate-pulse active:animate-bounce"
@@ -45,6 +49,9 @@ const Dashboard = () => {
                 >
                     Ver Resultados
                 </button>
+                {usuario && 
+                <PDFgenerador usuario={usuario} /> }
+                
             </div>
 
 
