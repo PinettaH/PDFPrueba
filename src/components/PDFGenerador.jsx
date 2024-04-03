@@ -9,7 +9,7 @@ function PDFgenerador({ usuario }) {
         console.log(usuario)
         const doc = new jsPDF();
         const headers = Object.keys(usuario[0])
-        const columns = [headers[1], headers[2], headers[3], headers[4]]
+        const columns = [[headers[1], headers[2], headers[3], headers[4]]]
         const data = usuario.map(function (u) {
             return [u.nombre, u.apellidos, u.cuil, u.correo]
         })
