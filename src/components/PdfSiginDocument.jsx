@@ -3,9 +3,9 @@ import { jsPDF } from "jspdf"
 import { autoTable } from 'jspdf-autotable';
 import logotc from '../imagenes/logotc.png'
 
-function PdfSiginDocument() {
-
+function PdfSiginDocument({ pagos }) {
     const handleclick = () => {
+        console.log(pagos)
         // Crear un nuevo documento PDF
         const doc = new jsPDF('portrait', 'mm', 'letter');
         //!Imagen
@@ -193,20 +193,25 @@ function PdfSiginDocument() {
         const doc2 = new jsPDF({
             orientation: 'landscape' // Cambie a landscape para tener mas espacio horizontal
         });
-        const tableData = [
-            ["", "MIN. DE EDUCACION", "Sindicato Educadores De La Rio", "Pago Retencion", "1.1", "RET", "", "", "", "TRB", "", "", "", "460.000,00", "0,00", "460.000,00", "03/07/2023", "19/12/2024"],
-            ["", "MIN. DE EDUCACION", "Asociacion de Trabajadores Pro", "Pago Retencion", "1.1", "RET", "", "", "", "TRB", "", "", "", "416.666,00", "0,00", "416.666,00", "03/07/2023", "19/12/2024"],
-            ["", "ADM.PCIAL. DE R.T.R.", "Satsaid", "Pago Retencion", "1.1", "RET", "", "", "", "RC", "10414", "241.060,06", "0,00", "241.060,06", "03/07/2023", "19/12/2024"],
-            ["", "SEC.GRAL.GOBERNACION", "Satsaid", "Pago Retencion", "1.1", "RET", "", "", "", "RC", "10414", "", "", "6.598,23", "0,00", "6.598,23", "03/07/2023", "19/12/2024"],
-        ];
+        const tableData = pagos.map(function (p) {
+
+            //toLocaleString() formatea numeros.
+            //parseo el u.valor a float y lo formateo diciendo que sea en ES (. para miles y , para centavos) con maximo 2 digitos de centavos
+            const netoFormateado = parseFloat(p.neto).toLocaleString('es-ES', { minimumFractionDigits: 2 });
+            const retenidoFormateado = parseFloat(p.retenido).toLocaleString('es-ES', { minimumFractionDigits: 2 });
+            const brutoFormateado = parseFloat(p.bruto).toLocaleString('es-ES', { minimumFractionDigits: 2 });
+
+            return [p.saf, p.denomina_saf, p.beneficiario, p.observacion, p.fuente, p.clase_gasto, p.tipoop, p.nro_tramite, p.anioinforme, p.medio_pago, p.archivo, p.opsidif, p.numeroop, netoFormateado, retenidoFormateado, brutoFormateado, p.fecha_pago, p.diarecibido + p.mesrecibido + p.aniorecibido];
+        });
         // Encabezado de la tabla
         const tableHeaders = [["|Datos del SAF", "", "", "", "", "", "", "|Datos del expediente", "", "", "", "", "", "|Monto", "", "", "|Fechas", ""]];
-
         // Encabezados de columna
         const headers = ["N° SAF", "Denominacion Saf", "Denominacion Beneficiario", "Observ. OP/Concepto", "F.F", "Clase Gto", "Tipo OP", "Nro. Expediente", "Año", "Medio Pago", "Nro. T.E.I.", "Nro. SIDIF OP", "Nro OP", "Imp. Neto OP", "Imp. Retenido", "Imp. Bruto OP", "Fecha de pago", "Fecha de visado"];
+        // const headersValue = Object.keys(usuarios[0])
+        // const headers = [headersValue[1], headersValue[2], headersValue[6], headersValue[7], headersValue[8], headersValue[9], headersValue[10], headersValue[12], headersValue[15], headersValue[16], headersValue[17], headersValue[23], headersValue[24], headersValue[25], headersValue[29] + headersValue[30] + headersValue[31]]
 
         // Define el ancho de cada columna
-        const columnWidth = 40; // Puedes ajustar el ancho segun las necesidades
+        const columnWidth = 70; // Puedes ajustar el ancho segun las necesidades
 
 
         // Calcula el ancho total de la tabla
@@ -227,8 +232,8 @@ function PdfSiginDocument() {
 
         const options = {
             styles: {
-                fontSize: 7,
-                margin: 2 // Ajusta el tamaño de fuente según tus necesidades
+                fontSize: 5,
+                margin: 1 // Ajusta el tamaño de fuente según tus necesidades
             }
         };
 
