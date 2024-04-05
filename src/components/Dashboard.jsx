@@ -12,15 +12,15 @@ import GeneradorPdfFm1 from './FM 1/GeneradorPdfFm1';
 const Dashboard = () => {
     const [usuarios, setUsuarios] = useState();
     const [pagos, setPagos] = useState();
+    const [op, setOp] = useState()
     useEffect(() => {
-        fechData();
+        fecthData()
     }, [])
-
-    const fechData = async () => {
-
-        const results = await siginApi.get('pagos122')
-        console.log(results.data)
-        setPagos(results.data)
+    const fecthData = async () => {
+        const { data } = await siginApi.get('pagos122');
+        console.log(data.length)
+        setOp(data.length)
+        setPagos(data[0])
     }
     // // const handleClick = async () => {
     //Con este try-catch siempre vas a querer hacer solicitudes al backend.
