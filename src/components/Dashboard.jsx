@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import userApi from '../api/userApi'
 import PDFgenerador from './PDFGenerador';
 import siginApi from '../api/sigin.Api';
 import axios from 'axios';
 import PdfSiginDocument from './PdfSiginDocument';
+import GeneradorPdfFm1 from './FM 1/GeneradorPdfFm1';
 
 
 
@@ -11,7 +12,16 @@ import PdfSiginDocument from './PdfSiginDocument';
 const Dashboard = () => {
     const [usuario, setUsuarios] = useState();
     const [pagos, setPagos] = useState();
-
+    const [op, setOp] = useState()
+    useEffect(() => {
+        fecthData()
+    }, [])
+    const fecthData = async () => {
+        const { data } = await siginApi.get('pagos122');
+        console.log(data.length)
+        setOp(data.length)
+        setPagos(data[0])
+    }
     // // const handleClick = async () => {
     //Con este try-catch siempre vas a querer hacer solicitudes al backend.
     //Desde el backend se maneja como se devuelven la informacion de la base de datos.
@@ -58,6 +68,7 @@ const Dashboard = () => {
                     <PDFgenerador usuario={usuario} />
                     <PdfSiginDocument /> </>} */}
                 <PdfSiginDocument />
+                <GeneradorPdfFm1 pago={pagos} cantidadOp={op} />
 
             </div>
 
