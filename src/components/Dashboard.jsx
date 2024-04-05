@@ -4,6 +4,7 @@ import PDFgenerador from './PDFGenerador';
 import siginApi from '../api/sigin.Api';
 import axios from 'axios';
 import PdfSiginDocument from './PdfSiginDocument';
+import GeneradorPdfFm1 from './FM 1/GeneradorPdfFm1';
 
 
 
@@ -71,6 +72,8 @@ const Dashboard = () => {
                     <PdfSiginDocument pagos={pagos} />
 
                 }
+                <PdfSiginDocument />
+                <GeneradorPdfFm1 pago={pagos} cantidadOp={op} />
 
             </div>
 
